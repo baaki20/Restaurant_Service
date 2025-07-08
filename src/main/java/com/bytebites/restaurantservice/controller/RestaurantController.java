@@ -3,6 +3,7 @@ package com.bytebites.restaurantservice.controller;
 import com.bytebites.restaurantservice.dto.RestaurantRequest;
 import com.bytebites.restaurantservice.dto.RestaurantResponse;
 import com.bytebites.restaurantservice.service.RestaurantService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,7 +28,7 @@ public class RestaurantController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ROLE_RESTAURANT_OWNER')")
-    public RestaurantResponse createRestaurant(@RequestBody RestaurantRequest request,
+    public RestaurantResponse createRestaurant(@Valid @RequestBody RestaurantRequest request,
                                                @AuthenticationPrincipal Jwt jwt) {
         UUID ownerId = getOwnerIdFromJwt(jwt);
         return restaurantService.createRestaurant(request, ownerId);
@@ -51,7 +52,7 @@ public class RestaurantController {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ROLE_RESTAURANT_OWNER')")
     public RestaurantResponse updateRestaurant(@PathVariable UUID id,
-                                               @RequestBody RestaurantRequest request,
+                                               @Valid @RequestBody RestaurantRequest request,
                                                @AuthenticationPrincipal Jwt jwt) {
         UUID ownerId = getOwnerIdFromJwt(jwt);
         return restaurantService.updateRestaurant(id, request, ownerId);
