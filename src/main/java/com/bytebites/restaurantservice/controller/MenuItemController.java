@@ -6,6 +6,8 @@ import com.bytebites.restaurantservice.service.MenuItemService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,8 +21,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/restaurants/{restaurantId}/menu-items")
 @RequiredArgsConstructor
-@Slf4j
 public class MenuItemController {
+
+    private static final Logger log = LoggerFactory.getLogger(MenuItemController.class);
 
     private final MenuItemService menuItemService;
 
